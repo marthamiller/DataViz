@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+  <title>CS 590V HW1 Martha Miller</title>
+  <style>
+    h1 {
+      font-family: "Open Sans";
+      font-size: 18px;
+      font-weight: 200;
+      text-align: left;
+      color: 686868;
+    }
+    h2 {
+      font-family: "Open Sans";
+      font-size: 16px;
+      font-weight: 200;
+      color: 686868;
+    }
+    p {
+      font-family: "Open Sans";
+      font-size: 12px;
+      text-align: left;
+      background: white;
+      color: black;
+    }    
+    blockquote {
+      font-family: "Open Sans";
+      font-size: 12px;
+      text-align: left;
+      background: white;
+      color: 888888;
+      display: block;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      margin-left: 40px;
+      margin-right: 40px;
+    }
+    body {
+      font-family: "Open Sans";
+      background: white;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const row = d => {
+      d.Cases2000 = +d.Cases2000;
+      d.Cases2001 = +d.Cases2001;
+      d.Cases2002 = +d.Cases2002;
+      d.Cases2003 = +d.Cases2003;
+      d.Cases2004 = +d.Cases2004;
+      d.Cases2005 = +d.Cases2005;
+      d.Cases2006 = +d.Cases2006;
+      d.Cases2007 = +d.Cases2007;
+      d.Cases2008 = +d.Cases2008;
+      d.Cases2009 = +d.Cases2009;
+      d.Cases2010 = +d.Cases2010;
+      d.Cases2011 = +d.Cases2011;
+      d.Cases2012 = +d.Cases2012;
+      d.Cases2013 = +d.Cases2013;
+      d.Cases2014 = +d.Cases2014;
+      d.Cases2015 = +d.Cases2015;
+      d.Cases2016 = +d.Cases2016;
+      return d;
+    };
+    d3.csv('data/ld-Case-Counts-by-County-00-16.csv', row, data => {
+      console.log(data);
+    }) 
+  </script>
+  <h1>CS 590V HW1</h1>
+  <h2>Martha Miller</h2>
+  <p>In CS590V, I hope to learn how to build effective and beautiful data vizualizations from scratch with web programming tools, which are largely new to me. I have a small amount of experience with CSS and HTML, but have never used them in context of displaying anything related to data analytics or performing interactive functions. I'm excited to learn D3 and to build reactive and dynamic graphics.</p>
+  <br>
+  <p>
+    <h2> Data </h2>
+    <center>
+      <a href="https://www.cdc.gov/lyme/stats/index.html">CDC Lyme Disease Statistics</a>, 2.3.2018
+    </center>
+    <p>
+      This visualization utilizes a CDC-developed public use dataset of reported Lyme disease cases, by county, for the years 2000-2016. 
+    </p>
+    <blockquote>
+        Lyme disease has been a nationally notifiable condition in the United States since 1991. Reports of Lyme disease are collected and verified by state and local health departments in accordance with their legal mandate and surveillance practices. After removal of personal identifiers, selected information on cases is shared with CDC through the National Notifiable Diseases Surveillance System (NNDSS). Policies regarding case definitions, reporting, confidentiality, and data release are determined by states and territories under the auspices of the Council of State and Territorial Epidemiologists (CSTE). Surveillance data have a number of limitations that need to be considered in the analysis, interpretation, and reporting of results.
+  </blockquote>
+  <script>
+    <script src="/run_me.js">
+  </script>
+</body>
