@@ -9,14 +9,14 @@
   <style>
     h1 {
       font-family: "Open Sans";
-      font-size: 18px;
+      font-size: 25px;
       font-weight: 200;
       text-align: left;
       color: 686868;
     }
     h2 {
       font-family: "Open Sans";
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 200;
       color: 686868;
     }
@@ -46,48 +46,89 @@
     }
   </style>
 </head>
+  <h1>CS 590V HW1: Lymes Disease Cases by Year, Per State</h1>
+  <h2>Martha Miller</h2>
 <body>
+  <svg width="800" height="500"></svg>
   <script>
+    const svg = d3.select('svg');
+    const width = svg.attr('width');
+    const height = svg.attr('height');
+    const margin = { left: 50, right: 20, top: 20, bottom: 20 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
+    const xValue = d => d.Year;
+    const xLabel = 'Reporting Year';
+    const yValue = d => d.Cases;
+    const yLabel = 'Lymes Disease Cases per State';
+    
+    const xScale = d3.scaleLinear();
+    const yScale = d3.scaleLinear();
+    const xAxis = d3.axisBottom().scale(xScale);
+    const yAxis = d3.axisLeft().scale(yScale);
+    
+    const g = svg.append('g')
+          .attr('transform', `translate(${margin.left},${margin.top})`);
+      const xAxisG = g.append('g')
+          .attr('transform', `translate(0, ${innerHeight})`);
+      const yAxisG = g.append('g');
+      const colorLegendG = g.append('g')
+          .attr('transform', `translate(${innerWidth + 60}, 150)`);
+
+      xAxisG.append('text')
+          .attr('class', 'axis-label')
+          .attr('x', innerWidth / 2)
+          .attr('y', 100)
+          .text(xLabel);
+
+      yAxisG.append('text')
+          .attr('class', 'axis-label')
+          .attr('x', -innerHeight / 2)
+          .attr('y', -60)
+          .attr('transform', `rotate(-90)`)
+          .style('text-anchor', 'middle')
+          .text(yLabel);
+
     const row = d => {
-      d.Cases2000 = +d.Cases2000;
-      d.Cases2001 = +d.Cases2001;
-      d.Cases2002 = +d.Cases2002;
-      d.Cases2003 = +d.Cases2003;
-      d.Cases2004 = +d.Cases2004;
-      d.Cases2005 = +d.Cases2005;
-      d.Cases2006 = +d.Cases2006;
-      d.Cases2007 = +d.Cases2007;
-      d.Cases2008 = +d.Cases2008;
-      d.Cases2009 = +d.Cases2009;
-      d.Cases2010 = +d.Cases2010;
-      d.Cases2011 = +d.Cases2011;
-      d.Cases2012 = +d.Cases2012;
-      d.Cases2013 = +d.Cases2013;
-      d.Cases2014 = +d.Cases2014;
-      d.Cases2015 = +d.Cases2015;
-      d.Cases2016 = +d.Cases2016;
+      d.Year = +d.Year;
+      d.Cases = +d.Cases;
       return d;
     };
-    d3.csv('data/ld-Case-Counts-by-County-00-16.csv', row, data => {
-      console.log(data);
+
+    d3.csv('data/lyme.csv', row, data => {
+      xScale
+        .domain(d3.extent(data, xValue))
+        .range([0, innerWidth]);
+      yScale
+        .domain(d3.extent(data, yValue))
+        .range([innerHeight, 0]);
+
+      svg.selectAll('circle').data(data)
+        .enter().append('circle')
+          .attr('cx', d => xScale(xValue(d)))
+          .attr('cy', d => yScale(yValue(d)))
+          .attr('r', 2);
+
+      xAxisG.call(xAxis);
+      yAxisG.call(yAxis);
     }) 
   </script>
-  <h1>CS 590V HW1</h1>
-  <h2>Martha Miller</h2>
-  <p>In CS590V, I hope to learn how to build effective and beautiful data vizualizations from scratch with web programming tools, which are largely new to me. I have a small amount of experience with CSS and HTML, but have never used them in context of displaying anything related to data analytics or performing interactive functions. I'm excited to learn D3 and to build reactive and dynamic graphics.</p>
-  <br>
   <p>
-    <h2> Data </h2>
-    <center>
-      <a href="https://www.cdc.gov/lyme/stats/index.html">CDC Lyme Disease Statistics</a>, 2.3.2018
-    </center>
+    <h2>Data </h2>
     <p>
       This visualization utilizes a CDC-developed public use dataset of reported Lyme disease cases, by county, for the years 2000-2016. 
     </p>
+      <a href="https://www.cdc.gov/lyme/stats/index.html">CDC Lyme Disease Statistics</a>, 2.3.2018
+
     <blockquote>
         Lyme disease has been a nationally notifiable condition in the United States since 1991. Reports of Lyme disease are collected and verified by state and local health departments in accordance with their legal mandate and surveillance practices. After removal of personal identifiers, selected information on cases is shared with CDC through the National Notifiable Diseases Surveillance System (NNDSS). Policies regarding case definitions, reporting, confidentiality, and data release are determined by states and territories under the auspices of the Council of State and Territorial Epidemiologists (CSTE). Surveillance data have a number of limitations that need to be considered in the analysis, interpretation, and reporting of results.
   </blockquote>
-  <script>
-    <script src="/run_me.js">
-  </script>
+  <h2>
+    About me
+  </h2>
+  <p>In CS590V, I hope to learn how to build effective and beautiful data vizualizations from scratch with web programming tools, which are largely new to me. I have a small amount of experience with CSS and HTML, but have never used them in context of displaying anything related to data analytics or performing interactive functions. I'm excited to learn D3 and to build reactive and dynamic graphics.</p>
+  <br>
+  <br>
+  Visualization created with credit to Curran Kelleher's <a href="https://livevideo.manning.com/course/26/d3-js-in-motion"> <i>D3 in Motion</i></a>
 </body>
